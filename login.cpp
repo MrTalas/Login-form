@@ -67,16 +67,52 @@ void Login(){
 }
 
 
-
+void main_menu(){
+    for(int i=0;i<30;i++){
+        cout << "=";
+    }
+    cout << endl;
+    cout << "\tLogin System V1" << endl;
+    cout << "1-Sign up" << endl;
+    cout << "2-Login" << endl;
+    cout << "3-Quit" << endl;
+    for(int i=0;i<30;i++){
+        cout << "=";
+    }
+    cout << endl;
+    cout << ": ";
+}
 int main(){
-    Signup();
     User user=User(username_,password_,securitycode_);
-    Login();
-    user.Login(username_,password_,securitycode_);
-    if(user.getAuthorization()){
-        cout << "Basarili";
+    int menu_secim;
+    menu_setup:
+    menu_secim=0;
+    main_menu();
+    cin >> menu_secim;
+    while(menu_secim!=0){
+        switch(menu_secim){
+            case 1:
+                Signup();
+                User(username_,password_,securitycode_);
+                goto menu_setup;
+                break;
+            case 2:
+                Login();
+                user.Login(username_,password_,securitycode_);
+                if(user.getAuthorization()){
+                    cout << "Basarili";
+                }
+                break;
+            case 3:
+                system("quit");
+                break;
+            default:
+                break;
+        }
     }
 
-    
 
+
+    
+    return 0;
 }
