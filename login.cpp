@@ -15,10 +15,17 @@ private:
     string username;
     string password;
     int securitycode;
+    string admin_username="admin";
+    string admin_password="admin";
+    int admin_securitycode=0000;
+    bool admin_check=false;
 public:
     bool login_check=false;
     bool getAuthorization(){
         return login_check;
+    }
+    bool getAdminAuthorization(){
+        return admin_check;
     }
     string getUsername(){
         return username;
@@ -37,6 +44,11 @@ public:
     void Login(string username_,string password_,int securitycode_){
         if(username==username_ and password==password_){
           login_check=true;
+        }
+    }
+    void AdminLogin(string username_,string password_,int securitycode_){
+        if(admin_username==username_ and admin_password==password_){
+          admin_check=true;
         }
     }
 };
@@ -77,6 +89,20 @@ void Login(){
     cin >> securitycode_;  
 }
 
+void AdminLogin(){
+    cout << "\tAdmin Login System Screen" << endl;
+    cout << "Enter admin username:";
+    cin >> username_;
+    cout << "Enter admin password:";
+    cin >> password_;
+    cout << "Enter admin security code:";
+    cin >> securitycode_;  
+}
+
+void AdminPanel(){
+    cout << "Admin paneline hosgeldiniz"<<endl;
+}
+
 
 void main_menu(){
     for(int i=0;i<30;i++){
@@ -87,6 +113,7 @@ void main_menu(){
     cout << "1-Sign up" << endl;
     cout << "2-Login" << endl;
     cout << "3-Quit" << endl;
+    cout << "4-Admin Management System" <<endl;
     for(int i=0;i<30;i++){
         cout << "=";
     }
@@ -120,6 +147,14 @@ int main(){
                 break;
             case 3:
                 exit(0);
+                break;
+            case 4:
+                AdminLogin();
+                user.AdminLogin(username_,password_,securitycode_);
+                if(user.getAdminAuthorization()){
+                    AdminPanel();
+                }
+                goto menu_setup;
                 break;
             default:
                 break;
