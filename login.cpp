@@ -1,5 +1,6 @@
 #include <iostream>
 #include <windows.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -34,12 +35,22 @@ public:
         securitycode=Securitycode;
     }
     void Login(string username_,string password_,int securitycode_){
-        if(username==username_ and password==password_ and securitycode==securitycode_){
+        if(username==username_ and password==password_){
           login_check=true;
         }
     }
 };
 
+void sss(){
+    for(int i=0;i<50;i++){
+        cout <<i;
+    }
+    cout <<endl;
+    Sleep(1000);
+    for(int i=50;i>0;i--){
+        cout << i;
+    }
+}
 void Signup(){
     int hata=0;
     cout << "\tSign-up Screen" << endl;
@@ -67,16 +78,56 @@ void Login(){
 }
 
 
-
+void main_menu(){
+    for(int i=0;i<30;i++){
+        cout << "=";
+    }
+    cout << endl;
+    cout << "\tLogin System V1" << endl;
+    cout << "1-Sign up" << endl;
+    cout << "2-Login" << endl;
+    cout << "3-Quit" << endl;
+    for(int i=0;i<30;i++){
+        cout << "=";
+    }
+    cout << endl;
+    cout << ": ";
+}
 int main(){
-    Signup();
     User user=User(username_,password_,securitycode_);
-    Login();
-    user.Login(username_,password_,securitycode_);
-    if(user.getAuthorization()){
-        cout << "Basarili";
+    int menu_secim;
+    menu_setup:
+    menu_secim=0;
+    main_menu();
+    cin >> menu_secim;
+    while(menu_secim!=0){
+        switch(menu_secim){
+            case 1:
+                Signup();
+                user=User(username_,password_,securitycode_);
+                goto menu_setup;
+                break;
+            case 2:
+                Login();
+                user.Login(username_,password_,securitycode_);
+                if(user.getAuthorization()){
+                    cout <<"Giris basarili";
+                }
+                else if(user.getAuthorization()==0){
+                    cout << "Member not find";
+                }
+                goto menu_setup;
+                break;
+            case 3:
+                exit(0);
+                break;
+            default:
+                break;
+        }
     }
 
-    
 
+
+    
+    return 0;
 }
