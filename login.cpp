@@ -7,8 +7,7 @@ using namespace std;
 string username_;
 string password_;
 int securitycode_;
-
-
+int sec;
 
 class User{
 private:
@@ -60,6 +59,9 @@ public:
     void setSecurityCode(int securitycode_){
         securitycode=securitycode_;
     }
+    string showUsers(){
+        return username;
+    }
 };
 
 
@@ -110,12 +112,13 @@ void AdminLogin(){
 }
 
 void AdminPanel(){
-    int sec;
     cout << "\tAdmin paneline hosgeldiniz"<<endl;
     cout << "1-Kayitli uyeleri goruntule" << endl;
     cout << "2-Kullanici adi degistir" << endl;
     cout << "3-Parola degistir" <<endl;
     cout << "4-Admin hesap ayarlarini degistir"<<endl;
+    cout << "5-Ana menuye don" << endl;
+    cout << ":" <<endl;
     cin >>sec;
 }
 
@@ -139,6 +142,7 @@ inline void main_menu(){
 int main(){
     User user=User(username_,password_,securitycode_);
     int menu_secim;
+    int secim;
     menu_setup:
     menu_secim=0;
     main_menu();
@@ -168,7 +172,23 @@ int main(){
                 AdminLogin();
                 user.AdminLogin(username_,password_,securitycode_);
                 if(user.getAdminAuthorization()){
-                    AdminPanel();
+                    AdminPanel(); // Admin panel seçim menusu
+                    switch(sec){ // Admin panel işlem seçim.
+                        case 1:
+                            cout << "============Kayitli olan uyeler============" <<endl;
+                            cout << user.showUsers() << "                     " << user.getPassword() << endl;
+                            break;
+                        case 2:
+                            cout << "Kullanici adi degistir" << endl;
+                        case 3:
+                            cout << "Parola degistir" << endl;
+                        case 4:
+                            cout << "Admin hesap ayarlarini degistir" << endl;
+                        case 5:
+                            cout << "Ana menuye don" << endl;
+                        default:
+                            break;
+                    }
                 }
                 goto menu_setup;
                 break;
