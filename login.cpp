@@ -31,23 +31,29 @@ public:
     User(string Username,string Password,int Securitycode){
         username=Username;
         password=Password;
-        Securitycode=securitycode;
+        securitycode=Securitycode;
     }
-    void Login(string Uusername,string Ppassword,int Ssecuritycode){
-        if(username==Uusername and password==Ppassword){
+    void Login(string username_,string password_,int securitycode_){
+        if(username==username_ and password==password_ and securitycode==securitycode_){
           login_check=true;
         }
     }
 };
 
 void Signup(){
+    int hata=0;
     cout << "\tSign-up Screen" << endl;
     cout << "Enter username:";
     cin >> username_;
     cout << "Enter password:";
     cin >> password_;
-    cout << "Enter security code:";
-    cin >> securitycode_;
+    if(username_.size()<5 || password_.size()<5){
+        cout << "Username ve Password 5 harften kucuk olamaz" <<endl;
+        hata=1;
+    }
+    if(hata==1)Signup();
+    if(hata==0){cout << "Enter security code:";
+    cin >> securitycode_;}
 }
 
 void Login(){
@@ -63,7 +69,6 @@ void Login(){
 
 
 int main(){
-    cout << "Start";
     Signup();
     User user=User(username_,password_,securitycode_);
     Login();
@@ -71,6 +76,7 @@ int main(){
     if(user.getAuthorization()){
         cout << "Basarili";
     }
+
     
 
 }
