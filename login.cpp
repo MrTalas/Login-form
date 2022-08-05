@@ -51,7 +51,17 @@ public:
           admin_check=true;
         }
     }
+    void setUsername(string username_){
+        username=username_;
+    }
+    void setPassword(string password_){
+        password=password_;
+    }
+    void setSecurityCode(int securitycode_){
+        securitycode=securitycode_;
+    }
 };
+
 
 void sss(){
     for(int i=0;i<50;i++){
@@ -100,11 +110,17 @@ void AdminLogin(){
 }
 
 void AdminPanel(){
-    cout << "Admin paneline hosgeldiniz"<<endl;
+    int sec;
+    cout << "\tAdmin paneline hosgeldiniz"<<endl;
+    cout << "1-Kayitli uyeleri goruntule" << endl;
+    cout << "2-Kullanici adi degistir" << endl;
+    cout << "3-Parola degistir" <<endl;
+    cout << "4-Admin hesap ayarlarini degistir"<<endl;
+    cin >>sec;
 }
 
 
-void main_menu(){
+inline void main_menu(){
     for(int i=0;i<30;i++){
         cout << "=";
     }
