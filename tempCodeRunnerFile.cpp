@@ -1,3 +1,1 @@
-string username_;
-string password_;
-int securitycode_;
+void
