@@ -16,13 +16,16 @@ private:
     int securitycode;
 public:
     bool login_check=false;
+    bool getAuthorization(){
+        return login_check;
+    }
     string getUsername(){
         return username;
     }
     string getPassword(){
         return password;
     }
-    string getSecurityCode(){
+    int getSecurityCode(){
         return securitycode;
     }
     User(string Username,string Password,int Securitycode){
@@ -31,8 +34,8 @@ public:
         Securitycode=securitycode;
     }
     void Login(string Uusername,string Ppassword,int Ssecuritycode){
-        if(Uusername==username and Ppassword==password and Ssecuritycode==securitycode){
-          login_check=true;  
+        if(username==Uusername and password==Ppassword){
+          login_check=true;
         }
     }
 };
@@ -47,12 +50,27 @@ void Signup(){
     cin >> securitycode_;
 }
 
+void Login(){
+    cout << "\tLogin Screen" << endl;
+    cout << "Enter username:";
+    cin >> username_;
+    cout << "Enter password:";
+    cin >> password_;
+    cout << "Enter security code:";
+    cin >> securitycode_;  
+}
+
 
 
 int main(){
     cout << "Start";
     Signup();
     User user=User(username_,password_,securitycode_);
-    user.Login();
+    Login();
+    user.Login(username_,password_,securitycode_);
+    if(user.getAuthorization()){
+        cout << "Basarili";
+    }
+    
 
 }
