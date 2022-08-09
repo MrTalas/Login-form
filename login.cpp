@@ -14,8 +14,8 @@ private:
     string username;
     string password;
     int securitycode;
-    string admin_username="admin";
-    string admin_password="admin";
+    string admin_username;
+    string admin_password;
     int admin_securitycode=0000;
     bool admin_check=false;
 public:
@@ -35,6 +35,14 @@ public:
     int getSecurityCode(){
         return securitycode;
     }
+    string getAdminUsername(){
+        return admin_username;
+    }
+
+    string getAdminPassword(){
+        return admin_password;
+    }
+
     User(string Username,string Password,int Securitycode){
         username=Username;
         password=Password;
@@ -46,15 +54,21 @@ public:
         }
     }
     void AdminLogin(string username_,string password_,int securitycode_){
-        if(admin_username==username_ and admin_password==password_){
+        if(admin_username==username_ && admin_password==password_){
           admin_check=true;
         }
+    }
+    void setAdminUsername(string username_){
+        admin_username=username_;
     }
     void setUsername(string username_){
         username=username_;
     }
     void setPassword(string password_){
         password=password_;
+    }
+    void setAdminPassword(string password_){
+        admin_password=password_;
     }
     void setSecurityCode(int securitycode_){
         securitycode=securitycode_;
@@ -122,6 +136,47 @@ void AdminPanel(){
     cin >>sec;
 }
 
+void AdminAccountSettingsChanges(){
+    cout << "\tAdmin Hesap Ayarlari" << endl;
+    cout << "1-Username degistir" <<endl;
+    cout << "2-Parola degistir" << endl;
+    cout << ":" <<endl;
+    cin >> sec;
+}
+
+void AdminAccountUsernameChange()
+{
+    User user=User(username_,password_,securitycode_);
+    char *current_username;current_username=(char*)malloc(8*sizeof(char));
+    char *current_password;current_password=(char*)malloc(8*sizeof(char));
+    int hak=0;
+    while(hak<3){
+        AdminAccountUsernameChange_setup:
+        cout << "Mevcut username:";
+        cin>> current_username;
+        cout << "Mevcut password:";
+        cin>> current_password;
+        if(hak>3){
+            break;
+        }
+        if(current_username!=user.getAdminUsername() || current_password!=user.getAdminPassword()){
+            cout << "Mevcut username ya da password hatali !" << endl;
+            hak++;
+            goto AdminAccountUsernameChange_setup;
+        }
+        else{
+            cout << "Yeni username:";
+            cin >> current_username;
+            cout << "Yeni password:";
+            cin >> current_password;
+            user.setAdminUsername(current_username);
+            user.setAdminPassword(current_password);
+            break;
+
+        }
+    }
+
+}
 
 inline void main_menu(){
     for(int i=0;i<30;i++){
@@ -141,6 +196,8 @@ inline void main_menu(){
 }
 int main(){
     User user=User(username_,password_,securitycode_);
+    user.setAdminUsername("admin");
+    user.setAdminPassword("admin");
     int menu_secim;
     int secim;
     menu_setup:
@@ -184,6 +241,8 @@ int main(){
                             cout << "Parola degistir" << endl;
                         case 4:
                             cout << "Admin hesap ayarlarini degistir" << endl;
+                            AdminAccountSettingsChanges();
+                            AdminAccountUsernameChange();
                         case 5:
                             cout << "Ana menuye don" << endl;
                         default:
@@ -198,7 +257,5 @@ int main(){
     }
 
 
-
-    
     return 0;
 }
