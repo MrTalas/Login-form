@@ -285,8 +285,20 @@ void Signup(){
     if(hata==1)Signup();
     if(hata==0){cout << "Enter security code:";
     cin >> securitycode_;}
+    cout << "Kayit basarili !" <<endl;
+    Sleep(600);
 }
 
+void BackorMain(){
+    cout << endl;
+    cout << endl;
+    sec=0;
+    cout <<"[1]Geri gel" <<endl;
+    cout <<"[2]Ana menu" <<endl;
+    cout <<":";
+    cin >> sec;
+
+}
 void Login(){
     cout << "\tLogin Screen" << endl;
     cout << "Enter username:";
@@ -323,7 +335,8 @@ void AdminAccountSettingsChanges(){
     cout << "\tAdmin Hesap Ayarlari" << endl;
     cout << "1-Username degistir" <<endl;
     cout << "2-Parola degistir" << endl;
-    cout << "3-Ana menuye don" << endl;
+    cout << "3-Geri gel" << endl;
+    cout << "4-Ana menu" << endl;
     cout << ":" <<endl;
     cin >> sec;
 }
@@ -354,6 +367,7 @@ int main(){
     user.setAdminUsername("admin");
     user.setAdminPassword("admin");
     menu_setup:
+    system("cls");
     int menu_secim;
     int secim=0;
     user.LockAdminAuthorization();
@@ -364,11 +378,13 @@ int main(){
     while(menu_secim!=0){
         switch(menu_secim){
             case 1:
+                system("cls");
                 Signup();
                 user.Signup(username_,password_,securitycode_);
                 goto menu_setup;
                 break;
             case 2:
+                system("cls");
                 user.LockAdminAuthorization();
                 Login();
                 user.Login(username_,password_,securitycode_);
@@ -378,30 +394,41 @@ int main(){
                 else if(user.getAuthorization()==0){
                     cout << "Member not find"<<endl;
                 }
+                Sleep(600);
                 goto menu_setup;
                 break;
             case 3:
                 exit(0);
                 break;
             case 4: //Admin management system
+                system("cls");
                 user.LockUserAuthorization();
                 AdminLogin();
                 user.AdminLogin(username_,password_,securitycode_);
                 if(user.getAdminAuthorization()){
+                    admin_setup:
+                    system("cls");
                     AdminPanel(); // Admin panel seçim menusu
                     switch(sec){ // Admin panel işlem seçim.
                         case 1:
+                            system("cls");
                             cout << "============Kayitli olan uyeler============" <<endl;
                             cout << user.showUsers() << "                     " << user.getPassword() << endl;
+                            BackorMain();
+                            if(sec==1)goto admin_setup;
+                            if(sec==2)goto menu_setup;
                             break;
                         case 2:
+                            system("cls");
                             cout << "Kullanici adi degistir" << endl;
                             user.UserAccountUsernameChange();
                             break;
                         case 3:
+                            system("cls");
                             cout << "Parola degistir" << endl;
                             user.UserAccountPasswordChange();
                         case 4:
+                            system("cls");
                             cout << "Admin hesap ayarlarini degistir" << endl;
                             AdminAccountSettingsChanges();
                             if(sec==1){
@@ -411,6 +438,9 @@ int main(){
                                 user.AdminAccountPasswordChange();
                             }
                             else if(sec==3){
+                                goto admin_setup;
+                            }
+                            else if(sec==4){
                                 goto menu_setup;
                             }
                         case 5:
@@ -418,6 +448,10 @@ int main(){
                         default:
                             break;
                     }
+                }
+                else{
+                    cout << "Hatali username ya da parola" << endl;
+                    Sleep(600);
                 }
                 goto menu_setup;
                 break;
