@@ -262,14 +262,48 @@ public:
 
 
 void sss(){
-    for(int i=0;i<50;i++){
-        cout <<i;
+    for(int i=0;i<30;i++){
+        cout << "=";
     }
-    cout <<endl;
-    Sleep(1000);
-    for(int i=50;i>0;i--){
-        cout << i;
+    cout << endl;
+}
+
+bool passwordCheck(string news){
+    passwordCheck:
+    int i=0,j=0;
+    int upper_case=0;
+    int lower_case=0;
+    int number=0;
+    int special_ch=0;
+    int space_ch=0;
+    bool check=false;
+    while(news[i]!='\0'){
+        if(islower(news[i])){
+            lower_case++;
+        }
+        if(isupper(news[i])){
+            upper_case++;
+        }
+        if(isspace(news[i])){
+            space_ch++;
+        }
+        if(isdigit(news[i])){
+            number++;
+        }
+        if(ispunct(news[i])){
+            special_ch++;
+        }
+        j++; 
+        i++;   
     }
+    if(space_ch>0 || lower_case<1 || upper_case<1 || number<1 || special_ch<1){
+        // cout << "Hatali parola ! >> Parolada bosluk olamaz - En az 1 buyuk/kucuk harf, rakam ve noktalama isareti olmasi gerekir" << endl;
+        check=false;
+    }
+    else{
+        check=true;
+    }
+    return check;
 }
 void Signup(){
     int hata=0;
@@ -278,8 +312,11 @@ void Signup(){
     cin >> username_;
     cout << "Enter password:";
     cin >> password_;
-    if(username_.size()<5 || password_.size()<5){
+    if(username_.size()<5 || password_.size()<5 || passwordCheck(password_)==0){
+        sss();
         cout << "Username ve Password 5 harften kucuk olamaz" <<endl;
+        cout << "En az 1 buyuk harf,kucuk harf,rakam,ozel karakter kullanmak zorunludur"<<endl;
+        sss();
         hata=1;
     }
     if(hata==1)Signup();
