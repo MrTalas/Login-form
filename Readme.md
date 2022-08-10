@@ -1,4 +1,4 @@
-# User login-managament system
+# User login-management system
 
 - User can register and login.
 
