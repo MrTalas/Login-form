@@ -341,8 +341,23 @@ void AdminAccountSettingsChanges(){
     cin >> sec;
 }
 
+void LoginMenu(){
+    sec=0;
+    cout << "[1]Hesap ayarlari" <<endl;
+    cout << "[2]Ana menu"<<endl;
+    cout << ":";
+    cin >> sec;
+}
 
-
+void UserAccountSettingsChanges(){
+    sec=0;
+    cout << "[1]Username degistir" << endl;
+    cout << "[2]Password degistir" << endl;
+    cout << "[3]Geri gel" << endl;
+    cout << "[4]Ana menu" << endl;
+    cout << ":" ;
+    cin >> sec;
+}
 inline void main_menu(){
     for(int i=0;i<30;i++){
         cout << "=";
@@ -390,6 +405,37 @@ int main(){
                 user.Login(username_,password_,securitycode_);
                 if(user.getAuthorization()){
                     cout <<"Giris basarili"<<endl;
+                    Sleep(600);
+                    login_menu:
+                    system("cls");
+                    LoginMenu();
+                    switch(sec){
+                        case 1:
+                            Sleep(600);
+                            useraccountsetting_menu:
+                            system("cls");
+                            UserAccountSettingsChanges();
+                            if(sec==1){
+                                user.UserAccountUsernameChange();
+                            }
+                            else if(sec==2){
+                                user.UserAccountPasswordChange();
+                            }
+                            else if(sec==3){
+                                goto login_menu;
+                            }
+                            else if(sec==4){
+                                goto menu_setup;
+                            }
+                            else{
+                               goto useraccountsetting_menu; 
+                            }
+                            break;
+                        case 2:
+                            break;
+                        default:
+                            goto login_menu;
+                    }
                 }
                 else if(user.getAuthorization()==0){
                     cout << "Member not find"<<endl;
